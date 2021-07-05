@@ -13,6 +13,6 @@ data class Product (
     val unitPrice: Double? = 0.0,
 
     @ManyToOne
-    @JoinColumn(name = "orderId")
-    val orderDetail: OrderDetail? = null
+    @JoinColumn(name = "ordersId")
+    val orderDetail: OrderDetail?
 )

@@ -1,4 +1,3 @@
-/*
 package com.dev.ecommerce.repository;
 
 import com.dev.ecommerce.model.Product;
@@ -8,4 +7,3 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProductRepository extends JpaRepository <Product,Long> {
 }
-*/

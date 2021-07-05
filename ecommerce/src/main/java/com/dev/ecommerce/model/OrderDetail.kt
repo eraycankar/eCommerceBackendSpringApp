@@ -12,13 +12,13 @@ data class OrderDetail (
     val id: Long?,
 
     @ManyToOne
-    @JoinColumn(name = "orderId")
-    val order: Order?,
+    @JoinColumn(name = "ordersId")
+    val orders: Orders?,
 
     @ManyToOne
     @JoinColumn(name = "productId")
     val product: Product?,
 
-    val quantity: Int = 0,
-    val subtotal: Double = 0.0
+    //val quantity: Int = 0,
+    //val subtotal: Double = 0.0
 )

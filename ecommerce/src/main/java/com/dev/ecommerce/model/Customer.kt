@@ -12,12 +12,7 @@ data class Customer (
     val mail: String?,
     val phone: String?,
 
-   @ManyToMany(cascade = [CascadeType.ALL])
-    @JoinColumn(name = "orderId")
-   @JoinTable(
-        name = "customer_orders",
-        joinColumns = [JoinColumn(name = "customerId")],
-        inverseJoinColumns = [JoinColumn(name = "orderId")]
-    )
-    val order: Set<Order> = HashSet(0)
+   @OneToMany
+    @JoinColumn(name = "ordersId")
+    val orders: Set<Orders> = HashSet(0)
 )
