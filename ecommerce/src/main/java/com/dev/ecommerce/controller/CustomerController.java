@@ -18,10 +18,10 @@ import java.util.Optional;
 @RequestMapping("/api/customers")
 public class CustomerController {
 
-
     private final CustomerService customerService;
     private final CustomerMapper customerMapper;
     private final CreateCustomerRequestMapper createCustomerRequestMapper;
+
 
     public CustomerController(CustomerRepository customerRepository, CustomerService customerService, CustomerMapper customerMapper, CreateCustomerRequestMapper createCustomerRequestMapper) {
         this.customerService = customerService;
@@ -55,12 +55,4 @@ public class CustomerController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(customerDto);
     }
 
-    /* @PostMapping
-    public CustomerDto addCustomer(@RequestBody CustomerDto customerDto){
-        return customerService.addCustomer(customerDto);
-    }*/
-   /* @GetMapping
-    ResponseEntity<List<Customer>> getCustomers(){
-        return new ResponseEntity<List<Customer>>((List<Customer>) customerRepository.findAll(), HttpStatus.OK);
-    }*/
 }

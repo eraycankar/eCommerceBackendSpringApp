@@ -1,5 +1,7 @@
 package com.dev.ecommerce.controller;
 
+import com.dev.ecommerce.dto.CreateProductDto;
+import com.dev.ecommerce.dto.CreateProductMapper;
 import com.dev.ecommerce.dto.ProductDto;
 import com.dev.ecommerce.dto.ProductMapper;
 import com.dev.ecommerce.model.Product;
@@ -14,12 +16,15 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
+
     private final ProductService productService;
     private final ProductMapper productMapper;
+    private final CreateProductMapper createProductMapper;
 
-    public ProductController(ProductService productService, ProductMapper productMapper) {
+    public ProductController(ProductService productService, ProductMapper productMapper, CreateProductMapper createProductMapper) {
         this.productService = productService;
         this.productMapper = productMapper;
+        this.createProductMapper = createProductMapper;
     }
 
     @GetMapping
@@ -34,9 +39,9 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductDto> createProduct (@RequestBody ProductDto productDto){
+    public ResponseEntity<CreateProductDto> createProduct (@RequestBody ProductDto productDto){
         productService.saveProduct(productMapper.toProductDto(productDto));
-        return ResponseEntity.status(HttpStatus.CREATED).body(productDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createProductMapper.toCreateProductDto(productDto));
     }
 
     @PutMapping("/{id}")

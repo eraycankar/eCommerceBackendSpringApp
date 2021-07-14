@@ -13,12 +13,10 @@ import java.util.List;
 public class OrderDetailController {
 
     private final OrderDetailMapper orderDetailMapper;
-    private final OrderDetailRepository orderDetailRepository;
     private final OrderDetailService orderDetailService;
 
-    public OrderDetailController(OrderDetailMapper orderDetailMapper, OrderDetailRepository orderDetailRepository, OrderDetailService orderDetailService) {
+    public OrderDetailController(OrderDetailMapper orderDetailMapper, OrderDetailService orderDetailService) {
         this.orderDetailMapper = orderDetailMapper;
-        this.orderDetailRepository = orderDetailRepository;
         this.orderDetailService = orderDetailService;
     }
 
@@ -26,10 +24,11 @@ public class OrderDetailController {
     public List<OrderDetailDto> getOrderDetails(){
         return orderDetailService.getAllOrderDetails();
     }
+
     @GetMapping("/api/orders/{ordersId}/orderDetails")
-        public List<OrderDetail> getOrderDetailsByOrderId(@PathVariable(value = "ordersId")Long ordersId){
-            return orderDetailRepository.findByOrdersId(ordersId);
-        }
+    public List<OrderDetailDto> getOrderDetailsByOrderId(@PathVariable(value = "ordersId")Long ordersId){
+        return orderDetailService.getOrderDetailsById(ordersId);
+    }
 
     @PostMapping("/api/orders/{ordersId}/orderDetails")
     public OrderDetailDto createOrderDetail(@PathVariable(value ="ordersId")Long ordersId, @RequestBody OrderDetail orderDetail){

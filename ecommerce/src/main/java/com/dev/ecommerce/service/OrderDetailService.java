@@ -26,6 +26,8 @@ public class OrderDetailService {
 
     public List<OrderDetailDto> getAllOrderDetails(){return  orderDetailMapper.toListOrderDetailDto(orderDetailRepository.findAll());}
 
+    public List<OrderDetailDto> getOrderDetailsById(Long id){return orderDetailMapper.toListOrderDetailDto(orderDetailRepository.findByOrdersId(id));}
+
     public OrderDetailDto createOrderDetail(Long id, OrderDetail orderDetail){
         return orderDetailMapper.convertOrderDetailDto(ordersRepository.findById(id).map(orders -> {
             orderDetail.setOrders(orders);

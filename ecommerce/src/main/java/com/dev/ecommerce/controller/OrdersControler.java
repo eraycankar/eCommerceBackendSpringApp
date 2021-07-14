@@ -18,35 +18,26 @@ import java.util.List;
 public class OrdersControler {
 
     private final OrdersService ordersService;
-    private final OrdersRepository ordersRepository;
-    private final CustomerRepository customerRepository;
     private final OrdersMapper ordersMapper;
 
-    public OrdersControler(OrdersService ordersService, OrdersRepository ordersRepository, CustomerRepository customerRepository, OrdersMapper ordersMapper) {
+    public OrdersControler(OrdersService ordersService, OrdersMapper ordersMapper) {
         this.ordersService = ordersService;
-        this.ordersRepository = ordersRepository;
-        this.customerRepository = customerRepository;
         this.ordersMapper = ordersMapper;
     }
 
-   /* @PostMapping
-    public ResponseEntity<OrdersDto> createOrder(@RequestBody OrdersDto ordersDto){
-        ordersService.createOrder(ordersDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(ordersDto);
-    }*/
     @GetMapping("/api/orders")
     public List<OrdersDto> getOrders(){
         return ordersService.getAllOrders();
     }
 
     @GetMapping("/api/customers/{customerId}/orders")
-    public List<Orders> getOrdersByCustomerId(@PathVariable(value = "customerId")Long customerId){
-        return ordersRepository.findByCustomerId(customerId);
+    public List<OrdersDto> getOrdersByCustomerId(@PathVariable(value = "customerId")Long customerId){
+        return ordersService.getOrdersById(customerId);
     }
 
     @GetMapping("api/orders/{from}/{to}")
     public List<GetOrdersFromDateRange> getOrdersFromDateRange(@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate from, @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate to){
-        return ordersRepository.findByCreationDateBetween(from,to);
+        return ordersService.getOrdersFromCreationDate(from, to);
     }
 
     @PostMapping("/api/customers/{customerId}/orders")

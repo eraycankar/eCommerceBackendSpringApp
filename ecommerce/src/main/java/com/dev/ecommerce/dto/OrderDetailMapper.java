@@ -1,7 +1,6 @@
 package com.dev.ecommerce.dto;
 
 import com.dev.ecommerce.model.OrderDetail;
-import com.dev.ecommerce.model.Orders;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

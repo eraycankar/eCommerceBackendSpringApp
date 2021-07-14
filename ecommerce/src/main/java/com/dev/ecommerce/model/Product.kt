@@ -12,7 +12,4 @@ data class Product (
     var name: String?,
     var unitPrice: Double? = 0.0,
 
-   /* @OneToMany
-    @JoinColumn(name = "ordersId")
-    var orderDetail: OrderDetail?*/
 )
