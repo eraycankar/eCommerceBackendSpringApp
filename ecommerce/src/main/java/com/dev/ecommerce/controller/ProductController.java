@@ -29,12 +29,12 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity<List<ProductDto>> findAllProducts(){
-        return ResponseEntity.ok(productService.findAllProducts());
+        return ResponseEntity.ok(productMapper.toListProductsDto(productService.findAllProducts()));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ProductDto> findProductById(@PathVariable Long id){
-        Optional<ProductDto> product = Optional.ofNullable(productService.findProductById(id));
+        Optional<ProductDto> product = Optional.ofNullable(productMapper.toProduct(productService.findProductById(id)));
         return ResponseEntity.ok(product.get());
     }
 

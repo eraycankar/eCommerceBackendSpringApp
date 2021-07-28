@@ -1,0 +1,54 @@
+version: '3'
+services:
+  ecommerce:
+    image: ecommerce:1.0
+    ports:
+      - "8080:8080"
+    links:
+      - "logstash:logstash"
+    depends_on:
+      - kibana
+
+  filebeat:
+    image: filebeat
+
+    links:
+      - "logstash:logstash"
+    volumes:
+      - /var/lib/docker:/var/lib/docker:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+
+
+
+  logstash:
+    image: logstash
+    ports:
+      - "5044:5044"
+    links:
+      - "elasticsearch:elasticsearch"
+    depends_on:
+      - elasticsearch
+
+  elasticsearch:
+    image: elasticsearch:7.13.2
+    environment:
+      - discovery.type=single-node
+    volumes:
+      - /app:/usr/share/elasticsearch/data
+
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+
+  kibana:
+    image: kibana:7.13.4
+    environment:
+      SERVER_NAME: kibana.example.org
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+    links:
+      - "elasticsearch:elasticsearch"
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+

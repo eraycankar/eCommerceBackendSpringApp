@@ -1,7 +1,5 @@
 package com.dev.ecommerce.service;
 
-import com.dev.ecommerce.dto.CustomerDto;
-import com.dev.ecommerce.dto.CustomerMapper;
 import com.dev.ecommerce.exception.CustomerNotFoundException;
 import com.dev.ecommerce.model.Customer;
 import com.dev.ecommerce.repository.CustomerRepository;
@@ -14,23 +12,23 @@ public class CustomerService {
 
 
     private final CustomerRepository customerRepository;
-    private final CustomerMapper customerMapper;
 
-    public CustomerService(CustomerRepository customerRepository, CustomerMapper customerMapper) {
+
+    public CustomerService(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
-        this.customerMapper = customerMapper;
+
     }
 
-    public List<CustomerDto> findAllCustomers(){
-        return customerMapper.toListCustomerDto(customerRepository.findAll());
+    public List<Customer> findAllCustomers(){
+        return customerRepository.findAll();
     }
 
-    public CustomerDto findCustomerById(Long id){
-        return customerMapper.toCustomerDto(customerRepository.findById(id).orElseThrow( () -> new CustomerNotFoundException("Customer could not find by id:"+id)));
+    public Customer findCustomerById(Long id){
+        return customerRepository.findById(id).orElseThrow( () -> new CustomerNotFoundException("Customer could not find by id:"+id));
     }
 
-    public CustomerDto saveCustomer(Customer customer){
-        return customerMapper.toCustomerDto(customerRepository.save(customer));
+    public Customer saveCustomer(Customer customer){
+        return customerRepository.save(customer);
     }
 
 }
