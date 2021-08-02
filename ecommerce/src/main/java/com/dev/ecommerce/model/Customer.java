@@ -1,7 +1,4 @@
 package com.dev.ecommerce.model;
-
-import org.jetbrains.annotations.NotNull;
-
 import javax.persistence.*;
 
 
@@ -11,7 +8,7 @@ public class Customer {
     @Column(name = "customerId")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NotNull
+
     private String name;
     private String mail;
     private String phone;

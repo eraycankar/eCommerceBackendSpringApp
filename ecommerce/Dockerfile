@@ -8,6 +8,6 @@ COPY src src
 RUN ./mvnw package
 
 FROM openjdk:11
-WORKDIR ecommerce
-COPY --from=build target/*.jar ecommerce.jar
-ENTRYPOINT ["java", "-jar", "ecommerce.jar"]
+WORKDIR EcommerceBackendApp
+COPY --from=build target/*.jar EcommerceBackendApp.jar
+ENTRYPOINT ["java", "-jar", "EcommerceBackendApp.jar"]

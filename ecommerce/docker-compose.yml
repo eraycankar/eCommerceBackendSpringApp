@@ -4,51 +4,40 @@ services:
     image: ecommerce:1.0
     ports:
       - "8080:8080"
-    links:
-      - "logstash:logstash"
     depends_on:
-      - kibana
-
-  filebeat:
-    image: filebeat
-
-    links:
-      - "logstash:logstash"
-    volumes:
-      - /var/lib/docker:/var/lib/docker:ro
-      - /var/run/docker.sock:/var/run/docker.sock
-
-
-
-  logstash:
-    image: logstash
-    ports:
-      - "5044:5044"
-    links:
-      - "elasticsearch:elasticsearch"
-    depends_on:
-      - elasticsearch
+      - logstash
 
   elasticsearch:
-    image: elasticsearch:7.13.2
-    environment:
-      - discovery.type=single-node
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.13.2
     volumes:
-      - /app:/usr/share/elasticsearch/data
-
+      - ./containers/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
     ports:
       - "9200:9200"
       - "9300:9300"
+    environment:
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.13.2
+    command: -f /etc/logstash/conf.d/
+    volumes:
+      - ./containers/logstash/logstash.conf:/etc/logstash/conf.d/logstash.conf
+      - D:/elkLogs/elktest.log:/home/app.log
+    ports:
+      - "5000:5000"
+      - "9600:9600"
+    environment:
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+    depends_on:
+      - elasticsearch
 
   kibana:
-    image: kibana:7.13.4
-    environment:
-      SERVER_NAME: kibana.example.org
-      ELASTICSEARCH_URL: http://elasticsearch:9200
-    links:
-      - "elasticsearch:elasticsearch"
+    image: docker.elastic.co/kibana/kibana:7.13.2
+    volumes:
+      - ./containers/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
     ports:
       - "5601:5601"
     depends_on:
       - elasticsearch
+
 
